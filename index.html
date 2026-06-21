@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christian Alonso Ruiz Martinez | Game Dev Portfolio</title>
+    <style>
+        /* ==========================================================================
+           1. BASE RESET & GENERAL THEME STYLES (Dark Mode Aesthetic)
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f111a; /* Sleek dark tech background */
+            color: #e4e7eb;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #161925;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #2f354a;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ffcc; /* Cyberpunk neon accent */
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: #e4e7eb;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #00ffcc;
+        }
+        main {
+            max-width: 1200px;
+            margin: 100px auto 40px auto; /* Accounts for fixed header spacing */
+            padding: 0 20px;
+        }
+        section {
+            margin-bottom: 80px;
+        }
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #00ffcc;
+            padding-left: 10px;
+            color: #fff;
+        }
+
+        /* ==========================================================================
+           ABOUT ME SPLIT CARD LAYOUT STYLES
+           ========================================================================== */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            align-items: center;
+            background-color: #161925;
+            border: 2px solid #2f354a;
+            border-radius: 12px;
+            padding: 30px;
+        }
+        .profile-image-wrapper {
+            width: 100%;
+            height: 320px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #2f354a;
+            background-color: #05070f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .about-text h3 {
+            color: #fff;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        .about-text p {
+            color: #b0b7c3;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        /* ==========================================================================
+           2. SHARED PROGRAMMING & SHOWCASE CAROUSEL WORKSPACES
+           ========================================================================== */
+        .showcase-container, .games-showcase-container, .models-showcase-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 30px;
+            align-items: start;
+            margin-bottom: 40px;
+        }
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .project-card {
+            background-color: #161925;
+            border: 2px solid #2f354a;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .project-card.active {
+            border-color: #00ffcc;
+            background-color: #1d2133;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.1);
+        }
+        .card-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .card-header h3 {
+            font-size: 1.15rem;
+            color: #fff;
+            margin-right: auto;
+        }
+        .badge {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .cs-badge { background-color: #178600; color: #fff; }
+        .py-badge { background-color: #3572A5; color: #fff; }
+        .engine-badge, .tool-badge { background-color: #4f566b; color: #fff; }
+
+        .github-link {
+            color: #00ffcc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .github-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Shared Carousel Components */
+        .carousel-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #0d0f18;
+            border: 1px solid #2f354a;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 15px 0;
+            gap: 10px;
+        }
+        .carousel-content {
+            flex: 1;
+            text-align: center;
+            min-height: 85px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .carousel-content h4 {
+            color: #00ffcc;
+            font-size: 1.05rem;
+            margin-bottom: 5px;
+        }
+        .carousel-content p {
+            font-size: 0.85rem;
+            color: #b0b7c3;
+            margin-bottom: 0 !important;
+            line-height: 1.4;
+        }
+        .carousel-arrow {
+            background: #1c2030;
+            border: 1px solid #2f354a;
+            color: #e4e7eb;
+            font-size: 1.1rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .carousel-arrow:hover {
+            background-color: #00ffcc;
+            color: #0f111a;
+            border-color: #00ffcc;
+        }
+
+        /* Virtual IDE Window Frame Screen Layout */
+        .code-window {
+            background-color: #05070f;
+            border: 1px solid #2f354a;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 100px;
+        }
+        .window-header {
+            background-color: #111420;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #2f354a;
+        }
+        .window-dots {
+            display: flex;
+            gap: 8px;
+            margin-right: 20px;
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background-color: #ff5f56; }
+        .yellow { background-color: #ffbd2e; }
+        .green { background-color: #27c93f; }
+        .window-title {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #7e899c;
+        }
+        pre { margin: 0; padding: 20px; overflow-x: auto; max-height: 520px; }
+        code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: #a9b2c3;
+            display: block;
+            white-space: pre-wrap; /* Keeps code text within viewer borders smoothly */
+        }
+
+        /* ==========================================================================
+           3. MEDIA WINDOW VIEWER LAYOUTS (For Game Videos & Sketchfab Iframes)
+           ========================================================================== */
+        .media-window-wrapper {
+            background-color: #05070f;
+            border: 2px solid #2f354a;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .media-window-header {
+            background-color: #111420;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #2f354a;
+        }
+        .media-window-title {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #7e899c;
+        }
+        .audio-toggle-btn {
+            background-color: #1c2030;
+            border: 1px solid #2f354a;
+            color: #00ffcc;
+            font-family: monospace;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .audio-toggle-btn:hover {
+            background-color: #00ffcc;
+            color: #0f111a;
+            border-color: #00ffcc;
+        }
+        .media-container {
+            position: relative;
+            width: 100%;
+            height: 360px;
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .portfolio-video, .sketchfab-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .portfolio-video { object-fit: cover; }
+
+        /* ==========================================================================
+           4. CONTACT & SOCIAL LINKS STYLES
+           ========================================================================== */
+        .contact-subtitle {
+            color: #b0b7c3;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 25px;
+        }
+        .contact-card {
+            background-color: #161925;
+            border: 2px solid #2f354a;
+            border-radius: 8px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .contact-card:hover {
+            border-color: #00ffcc;
+            transform: translateY(-3px);
+        }
+        .email-card { gap: 20px; }
+        .contact-icon { font-size: 2.5rem; }
+        .contact-text h3 { color: #fff; font-size: 1.2rem; margin-bottom: 4px; }
+        .contact-text p { color: #00ffcc; font-weight: 500; }
+        .social-links-grid { display: flex; flex-direction: column; gap: 15px; }
+        .social-card { padding: 20px; font-weight: 600; justify-content: center; }
+        .social-card.github { color: #fff; background-color: #24292e; border-color: #3f4448; }
+        .social-card.whatsapp { color: #fff; background-color: #25d366; border-color: #128c7e; }
+        .social-card.instagram { color: #fff; background-color: #e1306c; border-color: #f77737; }
+
+        /* ==========================================================================
+           5. RESPONSIVE RECONSTRAINTS RULES (MEDIA QUERIES)
+           ========================================================================== */
+        @media (max-width: 900px) {
+            .about-container { grid-template-columns: 1fr; text-align: center; }
+            .profile-image-wrapper { max-width: 320px; margin: 0 auto; }
+            .showcase-container, .games-showcase-container, .models-showcase-container { grid-template-columns: 1fr; }
+            .code-window { position: relative; top: 0; }
+            .contact-container { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 550px) {
+            .media-container { height: 240px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">CHRISTIAN ALONSO // GAME DEVELOPER</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#code">Programming</a></li>
+                <li><a href="#games">Games</a></li>
+                <li><a href="#models">3D Models</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        
+        <section id="about">
+            <div class="about-container">
+                <div class="profile-image-wrapper">
+                    <img src="profile.jpg" alt="Christian Alonso Ruiz Martinez" class="profile-pic" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:#5f6980; font-family:monospace; text-align:center; padding:20px;\'>[ Place profile.jpg here ]</span>';">
+                </div>
+                <div class="about-text">
+                    <h3>Hello, my name is Christian Alonso Ruiz Martinez. I'm a Game Designer & Programmer</h3>
+                    <p>I am a Mexican Game Designer specializing in gameplay programming. While my core development workflows revolve heavily around C# and Python, I also maintain a solid functional grasp of HTML, C++, and Java. I possess an advanced, practical knowledge of game architecture design within Unity alongside asset creation using Blender for professional high-to-low poly 3D character and environment pipelines.</p>
+                    <p>Having completed my university coursework, I am currently finalizing my diploma processes. I am also highly experienced in modern prompt engineering pipelines, utilizing advanced AI Large Language Models (LLMs) such as Gemini, Claude, and ChatGPT to safely clean, optimize, and iterate script structures efficiently. As a fast adapter with cross-functional project history, I am available for incoming full-time or part-time technical developer positions.</p>
+                    <p>Outside of game development, I work as a professional bilingual interpreter, maintaining absolute native-level fluency across both English and Spanish communication tracks.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="code">
+            <h2>Programming Abilities</h2>
+            <div class="showcase-container">
+                
+                <div class="project-list">
+                    <div class="project-card active" id="card-games" onclick="selectCategory('games')">
+                        <div class="card-header">
+                            <h3>Python Terminal Games</h3>
+                            <span class="badge py-badge">Python</span>
+                            <span class="badge engine-badge">Arcade Collection</span>
+                        </div>
+                        <div class="carousel-wrapper">
+                            <button class="carousel-arrow left" onclick="navigateCarousel(event, 'games', -1)">◂</button>
+                            <div class="carousel-content" id="carousel-games-text"></div>
+                            <button class="carousel-arrow right" onclick="navigateCarousel(event, 'games', 1)">▸</button>
+                        </div>
+                        <a href="https://github.com/TRoyalChris/python-Terminal-games" target="_blank" class="github-link" onclick="event.stopPropagation();">View Full Repository &rarr;</a>
+                    </div>
+
+                    <div class="project-card" id="card-utilities" onclick="selectCategory('utilities')">
+                        <div class="card-header">
+                            <h3>Python Utility Codes & C#</h3>
+                            <span class="badge py-badge">Python</span>
+                            <span class="badge cs-badge">C#</span>
+                            <span class="badge tool-badge">Tools Collection</span>
+                        </div>
+                        <div class="carousel-wrapper">
+                            <button class="carousel-arrow left" onclick="navigateCarousel(event, 'utilities', -1)">◂</button>
+                            <div class="carousel-content" id="carousel-utilities-text"></div>
+                            <button class="carousel-arrow right" onclick="navigateCarousel(event, 'utilities', 1)">▸</button>
+                        </div>
+                        <a href="https://github.com/TRoyalChris/python-utility-codes" target="_blank" class="github-link" onclick="event.stopPropagation();">View Full Repository &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="code-window">
+                    <div class="window-header">
+                        <div class="window-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <span class="window-title" id="window-title">Loading Module...</span>
+                    </div>
+                    <pre><code id="code-display">/* Fetching repository indexing parameters... */</code></pre>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="games">
+            <h2>Games Showcase</h2>
+            <div class="games-showcase-container">
+                
+                <div class="project-list">
+                    <div class="project-card active">
+                        <div class="card-header">
+                            <h3>Unity Game Productions</h3>
+                            <span class="badge engine-badge" style="background-color: #178600; color: white;">C#</span>
+                            <span class="badge tool-badge">Unity Production</span>
+                        </div>
+                        <div class="carousel-wrapper">
+                            <button class="carousel-arrow left" onclick="navigateVideoCarousel(-1)">◂</button>
+                            <div class="carousel-content" id="carousel-video-text"></div>
+                            <button class="carousel-arrow right" onclick="navigateVideoCarousel(1)">▸</button>
+                        </div>
+                        <a href="https://github.com/TRoyalChris" id="game-repo-link" target="_blank" class="github-link">View Engine Code Architecture &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="media-window-wrapper">
+                    <div class="media-window-header">
+                        <div class="window-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                            <span class="media-window-title" id="media-window-title" style="margin-left: 10px;">your-game-clip-1.mp4</span>
+                        </div>
+                        <button class="audio-toggle-btn" id="audio-toggle" onclick="toggleVideoMute()">🔈 UNMUTE</button>
+                    </div>
+                    <div class="media-container">
+                        <video id="portfolio-video-player" autoplay loop muted playsinline class="portfolio-video">
+                            <source id="video-player-source" src="your-game-clip-1.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="models">
+            <h2>3D Models Showcase</h2>
+            <div class="models-showcase-container">
+                
+                <div class="project-list">
+                    <div class="project-card active">
+                        <div class="card-header">
+                            <h3>3D Asset Pipeline</h3>
+                            <span class="badge tool-badge" style="background-color: #ff9900; color: #000;">3D ART</span>
+                            <span class="badge engine-badge">PBR Workflow</span>
+                        </div>
+                        <div class="carousel-wrapper">
+                            <button class="carousel-arrow left" onclick="navigateModelCarousel(-1)">◂</button>
+                            <div class="carousel-content" id="carousel-model-text"></div>
+                            <button class="carousel-arrow right" onclick="navigateModelCarousel(1)">▸</button>
+                        </div>
+                        <a href="https://sketchfab.com/Troyal" id="sketchfab-profile-link" target="_blank" class="github-link">View Sketchfab Profile &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="media-window-wrapper">
+                    <div class="media-window-header">
+                        <div class="window-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                            <span class="media-window-title" id="model-window-title">Sketchfab Sandbox</span>
+                        </div>
+                    </div>
+                    <div class="media-container">
+                        <iframe id="sketchfab-viewer" class="sketchfab-iframe" title="3D Model Viewer" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking"></iframe>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Get In Touch</h2>
+            <p class="contact-subtitle">I am currently open to new opportunities, freelance projects, and game studio roles. Let's build something together!</p>
+            
+            <div class="contact-container">
+                <a href="mailto:royal.chris.creeper@gmail.com" class="contact-card email-card">
+                    <span class="contact-icon">✉️</span>
+                    <div class="contact-text">
+                        <h3>Email Me</h3>
+                        <p>royal.chris.creeper@gmail.com</p>
+                    </div>
+                </a>
+
+                <div class="social-links-grid">
+                    <a href="https://wa.me/525649318748" target="_blank" class="contact-card social-card whatsapp">
+                        <span>💬 WhatsApp Chat &rarr;</span>
+                    </a>
+                    
+                    <a href="https://www.instagram.com/troyalcreations?igsh=MWozdHA4ZnI5em9weg==" target="_blank" class="contact-card social-card instagram">
+                        <span>Instagram Profile &rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const portfolioData = {
+            games: {
+                currentIndex: 0,
+                items: [
+                    {
+                        key: "python-blackjack",
+                        title: "Blackjack Card Engine",
+                        desc: "Procedural terminal blackjack logic executing hand arrays checking, rule verification for double aces, and automated safe-stand CPU actions.",
+                        fileName: "BlackJack.py",
+                        code: `import random
+
+cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+player_cards, cpu_cards = [], []
+player_total, cpu_total = 0, 0
+finish = False
+
+def clear_cards():
+    """This function clears the cards from the lists to restart the game"""
+    player_cards.clear()
+    cpu_cards.clear()
+    for card in range(2):
+        player_cards.append(random.choice(cards))
+        cpu_cards.append(random.choice(cards))
+
+clear_cards()
+player_total = sum(player_cards)
+cpu_total = sum(cpu_cards)`
+                    },
+                    {
+                        key: "python-hangman",
+                        title: "Hangman Tracking Engine",
+                        desc: "Monitors choice inputs, filters out duplicate historical letter guesses, and prints state increments via terminal assets.",
+                        fileName: "Hangman.py",
+                        code: `import random
+
+wordThisRound = random.choice(["unity", "python", "developer", "backend"])
+placeHolder = "_" * len(wordThisRound)
+wordComplete = False
+letters = []
+lives = 0
+
+print("Welcome to Hangman, good luck...")
+while not wordComplete and lives < 6:
+    guessed_word = input("Choose a letter: ").lower()
+    if guessed_word in letters:
+        print(f"The Letter {guessed_word} was already guessed")
+        continue
+    letters.append(guessed_word)`
+                    },
+                    {
+                        key: "python-rps",
+                        title: "Rock Paper Scissors Engine",
+                        desc: "A hand-game loop mapping console choices against structural logical matrix blocks to output game evaluation outcomes.",
+                        fileName: "main.py",
+                        code: `import random
+import testModule
+
+print("Rock, Paper, Scissors. Will you win?")
+player = int(input("Enter your choice: Type 0 for Rock, 1 for Paper, 2 for Scissors: "))
+cpu = random.randint(0,2)
+
+if player == 0:
+    if cpu == 0:
+        print("Tie!")
+    elif cpu == 1:
+        print("CPU wins!")
+    else:
+        print("Player wins!")`
+                    }
+                ]
+            },
+            utilities: {
+                currentIndex: 0,
+                items: [
+                    {
+                        key: "csharp-controller",
+                        title: "Unity Custom Player Movement",
+                        desc: "A clean, modular C# state machine built in Unity designed to safely compute velocity vector fields and momentum values.",
+                        fileName: "PlayerStateMachine.cs",
+                        code: `using UnityEngine;
+
+public class PlayerStateMachine : MonoBehaviour 
+{
+    private IPlayerState currentState;
+    [SerializeField] private Rigidbody rb;
+
+    void Start() {
+        // Initialize structural kinematic movement states
+        TransitionToState(new IdleMovementState());
+    }
+
+    public void TransitionToState(IPlayerState newState) {
+        currentState?.ExitState(this);
+        currentState = newState;
+        currentState.EnterState(this);
+        Debug.Log($"Switched player engine state node to: {newState.GetType().Name}");
+    }
+}`
+                    },
+                    {
+                        key: "python-cipher",
+                        title: "Caesar Cipher Tool",
+                        desc: "Runs encryption and decryption logic across index tracking character matrices using shifting loops.",
+                        fileName: "Caesar Cipher.py",
+                        code: `import string
+
+alphabet = list(string.ascii_lowercase)
+close = False
+
+def encrypt(message, shift_amount):
+    new_message = ""
+    for letter in message:
+        if letter in alphabet:
+            new_position = (alphabet.index(letter) + shift_amount) % len(alphabet)
+            new_message += alphabet[new_position]
+        else:
+            new_message += letter
+    print(f"Encrypted payload output: {new_message}")`
+                    },
+                    {
+                        key: "python-calculator",
+                        title: "First-Class Math Calculator",
+                        desc: "Maps basic operator symbol strings directly to mathematical functional targets via conditional memory logic dictionaries.",
+                        fileName: "Calculator.py",
+                        code: `def add(a,b): return a+b
+def subtract(a,b): return a-b
+def multiply(a,b): return a*b
+def divide(a,b): return a/b
+
+calc_used, result = True, 0
+operations = { "+": add, "-": subtract, "*": multiply, "/": divide }
+
+while calc_used:
+    first_number = result if result != 0 else int(input("Enter first number:\\n"))`
+                    },
+                    {
+                        key: "python-password",
+                        title: "Security Password Generator",
+                        desc: "Compiles random secure combinations using custom ranges of alphanumeric characters, symbols, and integers.",
+                        fileName: "PasswordGen.py",
+                        code: `import random
+
+alphabet_list = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd']
+numbers_list =  ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+symbols_list = ['!','#','$','%','&','(',')','*','+']
+password_list = []
+
+num_letters = int(input("How many letters would you like?\\n"))
+for letters in range(num_letters):
+    password_list.append(random.choice(alphabet_list))
+random.shuffle(password_list)`
+                    },
+                    {
+                        key: "python-auction",
+                        title: "Blind Secret Auction Manager",
+                        desc: "Tracks and stores bidding items inside structured key-value maps while using shell console resets for privacy validation.",
+                        fileName: "secretBid.py",
+                        code: `from os import system
+
+bid_amounts, finish = {}, False
+highest_Bid, highest_bidder = 0, ""
+
+while not finish:
+    key = input("Please input the name of the bidder: ")
+    value = int(input("Please input the amount to bid: $"))
+    bid_amounts[key] = value`
+                    }
+                ]
+            }
+        };
+
+        const videoData = [
+            {
+                title: "El Último Viaje",
+                desc: "An immersive Unity experience built for a game jam within a single week. Inspired by ancient Mexican tribe folklore, my work focused extensively on implementing core gameplay mechanics and programming custom visual shaders to capture the atmosphere.",
+                file: "your-game-clip-1.mp4",
+                repo: "https://github.com/TRoyalChris"
+            },
+            {
+                title: "Sacrilegium",
+                desc: "A gritty survival game set in a post-apocalyptic world where players navigate missions to stay alive. Developed over a full month in Unity, I was primarily responsible for building the 3D models alongside the main player and environment mechanics.",
+                file: "your-game-clip-2.mp4",
+                repo: "https://github.com/TRoyalChris"
+            },
+            {
+                title: "DreamsBound",
+                desc: "A stylized puzzle-adventure where players navigate a deep dreamscape, completing complex missions across intersecting 2D and 3D perspectives. Built in Unity over a month, I programmed all foundational gameplay mechanics and engineered the animation layers.",
+                file: "your-game-clip-3.mp4",
+                repo: "https://github.com/TRoyalChris"
+            },
+            {
+                title: "I'm Fine",
+                desc: "A fast-paced puzzle-solving game where players encounter stressful, layered logic locks that must be cracked under strict room time limits. Built within a dedicated one-week game jam sprint using Unity, where I fully engineered all underlying puzzle mechanics.",
+                file: "your-game-clip-4.mp4",
+                repo: "https://github.com/TRoyalChris"
+            },
+            {
+                title: "New Gen: The World's Greatest",
+                desc: "A passionate 2D RPG project heavily inspired by the mechanics and turn-based timing grids of the classic Mario & Luigi RPG saga. Developed across a full month in Unity, where I single-handedly built all systems, active battle menus, and collision checking logic.",
+                file: "your-game-clip-5.mp4",
+                repo: "https://github.com/TRoyalChris"
+            }
+        ];
+
+        const modelData = [
+            {
+                title: "Ogre Warrior",
+                desc: "A low-poly, game-ready creature model optimized for Unity pipelines. Features hand-painted textures and embedded combat animations ready for integration.",
+                embedId: "c5ad257c0a624c43806fabe4f013d8aa"
+            },
+            {
+                title: "Sailor Scout",
+                desc: "A stylized character sculpt originally created as a retro asset, newly revamped with clean topology and a vibrant Sailor Moon inspired aesthetic.",
+                embedId: "5ec326a696ae4fb4bfe03046d47ca6f3"
+            },
+            {
+                title: "Arnold Schwarzenegger Anatomical Study",
+                desc: "A high-fidelity 3D sculpting exercise focusing on hyper-detailed muscle anatomy, form, and precision proportion mapping.",
+                embedId: "d3e77f5a93fb45ae8dc7770b6cd07347"
+            },
+            {
+                title: "The Collector",
+                desc: "A low-poly horror monster model optimized for game engines. Conceptually designed around a creature that harvests and merges with the parts of its victims.",
+                embedId: "9fd94581d5914b2eaae77a564c4b7f9b"
+            },
+            {
+                title: "Arbeo Creature",
+                desc: "A unique creature design fusing the anatomy of a lobster and a cricket to form a low-poly enemy type built for modern gameplay pipelines.",
+                embedId: "0a9e45b382974409a31be19ff8a11c4e"
+            },
+            {
+                title: "Anti-Contamination Suit",
+                desc: "A stylized retro model designed around a nostalgic PS1 aesthetic, utilizing blocky topology and low-resolution texture clamping.",
+                embedId: "319ef545e7784cc1a8061abdeb5a9134"
+            },
+            {
+                title: "Modular Small Laboratory",
+                desc: "A modular structural environment diorama built for scale calibration, lighting bakes, and interior game asset prototyping.",
+                embedId: "2df7e969889942c8aa6c11f37e833e41"
+            },
+            {
+                title: "Great Saiyaman Helmet",
+                desc: "A hard-surface recreation of the iconic Great Saiyaman helmet from Dragon Ball, modeled with clean mechanical panel edges.",
+                embedId: "3733a23ecd4443b2b578ad1269a2a179"
+            },
+            {
+                title: "Metal Sonic Prototype",
+                desc: "A stylized tribute character piece portraying the non-threatening, retro mechanical prototype build that predated the final Metal Sonic duplicate.",
+                embedId: "ae3acc870207494888238ede2a131c82"
+            },
+            {
+                title: "Froggy Ranger",
+                desc: "An anthropomorphic, stylized character study generated from an experimental reference translation of random design concepts on Instagram.",
+                embedId: "145fa225d3424b6884ab26bbea171655"
+            },
+            {
+                title: "Retro Soldier Variant",
+                desc: "A low-poly infantry character model built with classic PS1 rendering rules, relying on sharp, geometric block styling.",
+                embedId: "abde3705b8694d1d857d043404d37c85"
+            }
+        ];
+
+        let videoCurrentIndex = 0;
+        let modelCurrentIndex = 0;
+        let currentActiveCategory = 'games';
+
+        function updateCarouselDisplay(category) {
+            const data = portfolioData[category];
+            const activeItem = data.items[data.currentIndex];
+            document.getElementById(`carousel-${category}-text`).innerHTML = `<h4>${activeItem.title}</h4><p>${activeItem.desc}</p>`;
+            if (category === currentActiveCategory) {
+                document.getElementById('window-title').innerText = activeItem.fileName;
+                document.getElementById('code-display').innerText = activeItem.code;
+            }
+        }
+
+        function navigateCarousel(event, category, direction) {
+            event.stopPropagation();
+            const data = portfolioData[category];
+            data.currentIndex += direction;
+            if (data.currentIndex < 0) data.currentIndex = data.items.length - 1;
+            if (data.currentIndex >= data.items.length) data.currentIndex = 0;
+            if (category !== currentActiveCategory) selectCategory(category); else updateCarouselDisplay(category);
+        }
+
+        function selectCategory(category) {
+            currentActiveCategory = category;
+            document.querySelectorAll('.project-card').forEach(card => card.classList.remove('active'));
+            if (category === 'games') document.getElementById('card-games').classList.add('active');
+            if (category === 'utilities') document.getElementById('card-utilities').classList.add('active');
+            updateCarouselDisplay(category);
+        }
+
+        function updateVideoDisplay() {
+            const currentVideo = videoData[videoCurrentIndex];
+            const player = document.getElementById('portfolio-video-player');
+            document.getElementById('carousel-video-text').innerHTML = `<h4>${currentVideo.title}</h4><p>${currentVideo.desc}</p>`;
+            document.getElementById('game-repo-link').href = currentVideo.repo;
+            document.getElementById('media-window-title').innerText = currentVideo.file;
+            player.src = currentVideo.file;
+            player.load();
+            player.play().catch(err => console.log(err));
+        }
+
+        function navigateVideoCarousel(direction) {
+            videoCurrentIndex += direction;
+            if (videoCurrentIndex < 0) videoCurrentIndex = videoData.length - 1;
+            if (videoCurrentIndex >= videoData.length) videoCurrentIndex = 0;
+            updateVideoDisplay();
+        }
+
+        function toggleVideoMute() {
+            const player = document.getElementById('portfolio-video-player');
+            const toggleBtn = document.getElementById('audio-toggle');
+            if (player.muted) {
+                player.muted = false;
+                toggleBtn.innerText = "🔊 MUTE AUDIO";
+                toggleBtn.style.backgroundColor = "#00ffcc"; toggleBtn.style.color = "#0f111a";
+            } else {
+                player.muted = true;
+                toggleBtn.innerText = "🔈 UNMUTE";
+                toggleBtn.style.backgroundColor = "#1c2030"; toggleBtn.style.color = "#00ffcc";
+            }
+        }
+
+        function updateModelDisplay() {
+            const currentModel = modelData[modelCurrentIndex];
+            document.getElementById('carousel-model-text').innerHTML = `<h4>${currentModel.title}</h4><p>${currentModel.desc}</p>`;
+            document.getElementById('model-window-title').innerText = currentModel.title.toLowerCase().replace(/ /g, "_") + ".fbx";
+            document.getElementById('sketchfab-viewer').src = `https://sketchfab.com/models/${currentModel.embedId}/embed?autostart=1&internal=1&ui_infos=0&ui_watermark=0&ui_theme=dark`;
+        }
+
+        function navigateModelCarousel(direction) {
+            modelCurrentIndex += direction;
+            if (modelCurrentIndex < 0) modelCurrentIndex = modelData.length - 1;
+            if (modelCurrentIndex >= modelData.length) modelCurrentIndex = 0;
+            updateModelDisplay();
+        }
+
+        window.onload = function() {
+            updateCarouselDisplay('games');
+            updateCarouselDisplay('utilities');
+            selectCategory('games');
+            updateVideoDisplay();
+            updateModelDisplay();
+        }
+    </script>
+</body>
+</html>
